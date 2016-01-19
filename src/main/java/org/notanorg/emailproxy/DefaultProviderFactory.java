@@ -7,11 +7,11 @@ import org.notanorg.email.service.providers.MailjetClient;
 
 public class DefaultProviderFactory implements EmailServiceProviderFactory {
 
-	public EmailServiceProvider createPrimaryServiceProvider() {
-		return new MailgunClient();
-	}
+  public EmailServiceProvider createPrimaryServiceProvider() {
+    return new MailgunClient();
+  }
 
-	public EmailServiceProvider createFallbackServiceProvider() {
-		return new MailjetClient();
-	}
+  public EmailServiceProvider createFallbackServiceProvider() {
+    return new MailjetClient();
+  }
 }

@@ -6,7 +6,7 @@ import org.notanorg.email.service.EmailServiceProvider;
 
 public class MailjetClient implements EmailServiceProvider {
 
-	public void send(EmailSendRequest request) throws EmailException {
+  public void send(EmailSendRequest request) throws EmailException {
 
-	}
+  }
 }

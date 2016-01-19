@@ -14,36 +14,36 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 public class MailgunClient implements EmailServiceProvider {
 
-	// please use an external config. please
-	private static final String AUTH_KEY = "key-ed00257f2e5464362e5b52ac0f0d628c";
-	private static final String API_ENDPOINT = "https://api.mailgun.net/v3/sandboxe0fe52484f824070b4a974986b43ed75.mailgun.org/messages";
-	private static final String SENDER_EMAIL = "Mailgun Sandbox <postmaster@sandboxe0fe52484f824070b4a974986b43ed75.mailgun.org>";
+  // please use an external config. please
+  private static final String AUTH_KEY = "key-ed00257f2e5464362e5b52ac0f0d628c";
+  private static final String API_ENDPOINT = "https://api.mailgun.net/v3/sandboxe0fe52484f824070b4a974986b43ed75.mailgun.org/messages";
+  private static final String SENDER_EMAIL = "Mailgun Sandbox <postmaster@sandboxe0fe52484f824070b4a974986b43ed75.mailgun.org>";
 
-	private Client client;
+  private Client client;
 
-	public MailgunClient() {
-		client = Client.create();
-		client.addFilter(new HTTPBasicAuthFilter("api", AUTH_KEY));
-	}
+  public MailgunClient() {
+    client = Client.create();
+    client.addFilter(new HTTPBasicAuthFilter("api", AUTH_KEY));
+  }
 
-	public void send(EmailSendRequest request) throws EmailException {
-		WebResource webResource = client.resource(API_ENDPOINT);
-		MultivaluedMapImpl formData = new MultivaluedMapImpl();
-		formData.add("from", SENDER_EMAIL);
-		formData.add("to", request.getTo());
-		formData.add("subject", request.getSubject());
-		formData.add("text", request.getMessage());
+  public void send(EmailSendRequest request) throws EmailException {
+    WebResource webResource = client.resource(API_ENDPOINT);
+    MultivaluedMapImpl formData = new MultivaluedMapImpl();
+    formData.add("from", SENDER_EMAIL);
+    formData.add("to", request.getTo());
+    formData.add("subject", request.getSubject());
+    formData.add("text", request.getMessage());
 
-		try {
-			ClientResponse response = webResource.type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse.class,
-					formData);
-			if (response.getStatus() >= 400) {
-				throw new EmailException("Mailgun API failed with HTTP status " + response.getStatus());
-			}
-		} catch (EmailException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new EmailException(e);
-		}
-	}
+    try {
+      ClientResponse response = webResource.type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse.class,
+          formData);
+      if (response.getStatus() >= 400) {
+        throw new EmailException("Mailgun API failed with HTTP status " + response.getStatus());
+      }
+    } catch (EmailException e) {
+      throw e;
+    } catch (Exception e) {
+      throw new EmailException(e);
+    }
+  }
 }
